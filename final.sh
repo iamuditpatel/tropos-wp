@@ -11,10 +11,10 @@ echo "Enter Your Domain:"
 read your_domain
 
 #Apache Installation
-source /home/ubuntu/environment/apache.sh
+source ./apache.sh
 
 #Enable Firewall
-source /home/ubuntu/environment/firewall.sh
+source ./firewall.sh
 
 #MYsql Password Generator
 PASSWORD=$(date +%s|sha256sum|base64|head -c 12)
@@ -22,13 +22,13 @@ LC_ALL=C tr -dc 'A-Za-z0-9!"#$%&'\''()*+,-./:;<=>?@[\]^_`{|}~' </dev/urandom | h
 rootpass="${PASSWORD} ${LC_ALL}"
 
 #Mysql Installation
-source /home/ubuntu/environment/mysql.sh
+source ./mysql.sh
 
 #PHP Installation
-source /home/ubuntu/environment/php.sh
+source ./php.sh
 
 #Virtual Host Installation
-source /home/ubuntu/environment/virtualhost.sh
+source ./virtualhost.sh
 
 #Database Name Generate
 dbname=`hexdump -n 8 -v -e '/1 "%02X"' /dev/urandom`
@@ -44,7 +44,7 @@ LC_ALL=C tr -dc 'A-Za-z0-9!"#$%&'\''()*+,-./:;<=>?@[\]^_`{|}~' </dev/urandom | h
 dbpass="${PASSWORD} ${LC_ALL}"
 
 #Wordpress Installation
-source /home/ubuntu/environment/wp.sh
+source ./wp.sh
 
 echo "Your Domain is: $your_domain"
 echo "Your Mysql Password is: $rootpass"
