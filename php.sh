@@ -2,11 +2,11 @@
 
 sudo apt-get -y install python-software-properties 
 
-sudo add-apt-repository ppa:ondrej/php 
+sudo add-apt-repository ppa:ondrej/php -y
 
 sudo apt-get -y update 
 
-sudo apt-get install -y php7.0
+sudo apt-get -y install php7.0
 
 sudo apt-get -y install php7.0-mysql php7.0-curl php7.0-json php7.0-cgi php7.0-xsl
 
