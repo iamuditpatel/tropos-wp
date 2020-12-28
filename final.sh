@@ -1,5 +1,12 @@
 #!/bin/bash
 
+chmod u+x apache.sh
+chmod u+x firewall.sh
+chmod u+x mysql.sh
+chmod u+x virtualhost.sh
+chmod u+x php.sh
+chmod u+x wp.sh
+
 echo "Enter Your Domain:"
 read your_domain
 
