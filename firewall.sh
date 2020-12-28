@@ -10,4 +10,7 @@ sudo ufw allow in "Apache"
 #If Ufw is disable then to enable it
 sudo ufw enable
 
+#Check Ufw status
+sudo ufw status
+
 
