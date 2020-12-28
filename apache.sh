@@ -5,7 +5,7 @@
 sudo apt-get -y update && sudo apt-get -y upgrade
 
 #To install Apache Server
-sudo apt-get install apache2 
+sudo apt-get -y install apache2 
 
 #Adding default server name to surpass the message
 sudo sed -i '$ a ServerName 127.0.0.1' /etc/apache2/apache2.conf
