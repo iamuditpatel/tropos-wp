@@ -21,4 +21,3 @@ sudo sed -i '28 a default_authentication_plugin= mysql_native_password' /etc/mys
 #To start, enable and check the status of Mysql
 sudo systemctl start mysql
 sudo systemctl enable mysql
-sudo systemctl status mysql
