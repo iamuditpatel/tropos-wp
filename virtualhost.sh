@@ -8,7 +8,7 @@ sudo mkdir /var/www/$your_domain
 sudo chown -R $USER:$USER /var/www/$your_domain
 
 #Copying the virtual host content to your_domain.conf file
-sudo cp /home/ubuntu/environment/virtual_host.txt  /etc/apache2/sites-available/$your_domain.conf
+sudo cp ./virtual_host.txt  /etc/apache2/sites-available/$your_domain.conf
 
 #Replacing your domain in .conf file
 sudo sed -i "s/domain/$your_domain/g" /etc/apache2/sites-available/$your_domain.conf
