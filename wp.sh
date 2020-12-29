@@ -22,14 +22,14 @@ CREATE USER '$dbuser'@'localhost' IDENTIFIED WITH mysql_native_password BY '$dbp
 GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'localhost' WITH GRANT OPTION; FLUSH PRIVILEGES;'
 
 #Changing Directory
-cd /var/www/wordpress
+#cd /var/www/wordpress
 
 #Changing in Config File
 sudo mv /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php
 
     	sudo perl -pi -e "s/database_name_here/$dbname/g" /var/www/wordpress/wp-config.php
 	sudo perl -pi -e "s/username_here/$dbuser/g" /var/www/wordpress/wp-config.php
-	sudo perl -pi -e "s/password_here/$pass/g" /var/www/wordpress/wp-config.php
+	sudo perl -pi -e "s/password_here/$dbpass/g" /var/www/wordpress/wp-config.php
 	
 #Setting up Salt Keys	
 SITE_PATH="/var/www/wordpress/wp-config.php"
@@ -66,13 +66,13 @@ fct_update_salts $SITE_PATH
 sudo sed -i '13 a $DB_NAME = "'$dbname'";\n $DB_HOST = "'localhost'";\n $DB_USER = "'$dbuser'";\n $DB_PASSWORD = "'$dbpass'";\n $conn = mysqli_connect($DB_NAME, $DB_HOST, $DB_USER, $DB_PASSWORD); ' /var/www/wordpress/index.php
 
 #moving all files from wordpress to your domain folder
-sudo mv /var/www/wordpress/* /var/www/$your_domain
+sudo mv /var/www/wordpress/* /var/www/$your_domain/
 
 #remove wordpress folder
-sudo rm -r /var/www/wordpress
+#sudo rm -r /var/www/wordpress
 
 #SettingUp Permission
-sudo chown -R www-data:www-data /var/www/$your_domain
+sudo chown -R www-data:www-data /var/www/$your_domain/
 sudo mkdir /var/www/$your_domain/wp-content/upgrade
 sudo chmod 775 /var/www/$your_domain/wp-content/upgrade
 #sudo find /var/www/$your_domain/ -type d -exec chmod 750 {} \;
