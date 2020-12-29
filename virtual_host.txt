@@ -2,7 +2,7 @@
     ServerAdmin webmaster@localhost
     ServerName domain	
     ServerAlias www.domain
-    DocumentRoot /var/www/domain
+    DocumentRoot /var/www/domain/
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
     
@@ -16,7 +16,7 @@
     ServerAdmin webmaster@localhost
     ServerName domain	
     ServerAlias www.domain
-    DocumentRoot /var/www/domain
+    DocumentRoot /var/www/domain/
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
     
