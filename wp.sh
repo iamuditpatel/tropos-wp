@@ -15,7 +15,11 @@ sudo tar xzvf latest.tar.gz
 chown -R www-data:www-data /var/www/wordpress/
 
 #Database Creation
-sudo mysql -u root -p$rootpass -Bse "Show databases; CREATE DATABASE '$dbname'; Show databases; CREATE USER '$dbuser'@'localhost' IDENTIFIED WITH mysql_native_password BY '$dbpass'; GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'localhost' WITH GRANT OPTION; FLUSH PRIVILEGES;"
+sudo mysql -u root -p '$rootpass' -Bse 'Show databases; 
+CREATE DATABASE '$dbname'; 
+Show databases; 
+CREATE USER '$dbuser'@'localhost' IDENTIFIED WITH mysql_native_password BY '$dbpass'; 
+GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'localhost' WITH GRANT OPTION; FLUSH PRIVILEGES;'
 
 #Changing Directory
 cd /var/www/wordpress
