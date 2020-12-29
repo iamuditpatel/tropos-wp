@@ -25,29 +25,29 @@ rootpass="${PASSWORD} ${LC_ALL}"
 source ./mysql.sh
 
 #PHP Installation
-#source ./php.sh
+source ./php.sh
 
 #Virtual Host Installation
 source ./virtualhost.sh
 
 #Database Name Generate
-#dbname=`hexdump -n 8 -v -e '/1 "%02X"' /dev/urandom`
+dbname=`hexdump -n 8 -v -e '/1 "%02X"' /dev/urandom`
 
 #Database User Generator
-#user='dbuser'
-#pass=`hexdump -n 8 -v -e '/1 "%02X"' /dev/urandom`
-#dbuser="${user}${pass}"
+user='dbuser'
+pass=`hexdump -n 8 -v -e '/1 "%02X"' /dev/urandom`
+dbuser="${user}${pass}"
 
 #Database Paswword Generator
-#PASSWORD=$(date +%s|sha256sum|base64|head -c 12)
-#LC_ALL=C tr -dc 'A-Za-z0-9!"#$%&'\''()*+,-./:;<=>?@[\]^_`{|}~' </dev/urandom | head -c 12
-#dbpass="${PASSWORD} ${LC_ALL}"
+PASSWORD=$(date +%s|sha256sum|base64|head -c 12)
+LC_ALL=C tr -dc 'A-Za-z0-9!"#$%&'\''()*+,-./:;<=>?@[\]^_`{|}~' </dev/urandom | head -c 12
+dbpass="${PASSWORD} ${LC_ALL}"
 
 #Wordpress Installation
-#source ./wp.sh
+source ./wp.sh
 
-#echo "Your Domain is: $your_domain"
-#echo "Your Mysql Password is: $rootpass"
-#echo "Your Database Name is: $dbname"
-#echo "Your Database User Name is: $dbuser"
-#echo "Your Database Password is: $dbpass"
+echo "Your Domain is: $your_domain"
+echo "Your Mysql Password is: $rootpass"
+echo "Your Database Name is: $dbname"
+echo "Your Database User Name is: $dbuser"
+echo "Your Database Password is: $dbpass"
