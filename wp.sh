@@ -59,7 +59,7 @@ fct_update_salts() {
 fct_update_salts $SITE_PATH
 
 #inserting in index.php
-sudo sed -i '15 a $DB_NAME = "$dbname";\n $DB_HOST = "localhost";\n $DB_USER = "$dbuser";\n $DB_PASSWORD = "$dbpass";\n $conn = mysqli_connect($DB_NAME, $DB_HOST, $DB_USER, $DB_PASSWORD); ' /var/www/wordpress/index.php
+sudo sed -i '13 a $DB_NAME = "'$dbname'";\n $DB_HOST = "'localhost'";\n $DB_USER = "'$dbuser'";\n $DB_PASSWORD = "'$dbpass'";\n $conn = mysqli_connect($DB_NAME, $DB_HOST, $DB_USER, $DB_PASSWORD); ' /var/www/wordpress/index.php
 
 #moving all files from wordpress to your domain folder
 sudo mv /var/www/wordpress/* /var/www/$your_domain
@@ -71,7 +71,7 @@ sudo rm -r /var/www/wordpress
 sudo chown -R www-data:www-data /var/www/$your_domain
 sudo mkdir /var/www/$your_domain/wp-content/upgrade
 sudo chmod 775 /var/www/$your_domain/wp-content/upgrade
-sudo find /var/www/$your_domain/ -type d -exec chmod 750 {} \;
-sudo find /var/www/$your_domain/ -type f -exec chmod 640 {} \;
+#sudo find /var/www/$your_domain/ -type d -exec chmod 750 {} \;
+#sudo find /var/www/$your_domain/ -type f -exec chmod 640 {} \;
 
 
