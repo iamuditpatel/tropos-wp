@@ -28,7 +28,7 @@ source ./mysql.sh
 #source ./php.sh
 
 #Virtual Host Installation
-#source ./virtualhost.sh
+source ./virtualhost.sh
 
 #Database Name Generate
 #dbname=`hexdump -n 8 -v -e '/1 "%02X"' /dev/urandom`
