@@ -11,6 +11,8 @@ sudo curl -O https://wordpress.org/latest.tar.gz
 #Extract the downloaded file of Wordpress
 sudo tar xzvf latest.tar.gz
 
+cd 
+
 #SetUp the Permission
 chown -R www-data:www-data /var/www/wordpress/
 
@@ -32,7 +34,7 @@ sudo mv /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php
 
     	sudo perl -pi -e "s/database_name_here/$dbname/g" /var/www/wordpress/wp-config.php
 	sudo perl -pi -e "s/username_here/$dbuser/g" /var/www/wordpress/wp-config.php
-	sudo perl -pi -e "s/password_here/$dbpass/g" /var/www/wordpress/wp-config.php
+	sudo perl -pi -e "s/password_here/$rootpass/g" /var/www/wordpress/wp-config.php
 	
 #Setting up Salt Keys	
 SITE_PATH="/var/www/wordpress/wp-config.php"
@@ -66,7 +68,7 @@ fct_update_salts() {
 fct_update_salts $SITE_PATH
 
 #inserting in index.php
-sudo sed -i '13 a $DB_NAME = "'$dbname'";\n $DB_HOST = "'localhost'";\n $DB_USER = "'$dbuser'";\n $DB_PASSWORD = "'$dbpass'";' /var/www/wordpress/index.php
+sudo sed -i '13 a $DB_NAME = "'$dbname'";\n $DB_HOST = "'localhost'";\n $DB_USER = "'$dbuser'";\n $DB_PASSWORD = "'$rootpass'";' /var/www/wordpress/index.php
 sudo sed -i '17 a $CONN = mysqli_connect($DB_NAME, $DB_HOST, $DB_USER, $DB_PASSWORD);' /var/www/wordpress/index.php
 
 #moving all files from wordpress to your domain folder
