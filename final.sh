@@ -1,7 +1,7 @@
 #!/bin/bash
 
 chmod u+x apache.sh
-chmod u+x firewall.sh
+#chmod u+x firewall.sh
 chmod u+x mysql.sh
 chmod u+x virtualhost.sh
 chmod u+x php.sh
@@ -14,7 +14,7 @@ read your_domain
 source ./apache.sh
 
 #Enable Firewall
-source ./firewall.sh
+#source ./firewall.sh
 
 #MYsql Password Generator
 PASSWORD=$(date +%s|sha256sum|base64|head -c 12)
