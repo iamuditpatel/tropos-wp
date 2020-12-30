@@ -11,6 +11,7 @@ sudo curl -O https://wordpress.org/latest.tar.gz
 #Extract the downloaded file of Wordpress
 sudo tar xzvf latest.tar.gz
 
+#Back to Parent Directory
 cd 
 
 #SetUp the Permission
@@ -25,9 +26,6 @@ CREATE USER '$dbuser'@'localhost' IDENTIFIED WITH mysql_native_password BY '$roo
 GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'localhost' WITH GRANT OPTION; 
 FLUSH PRIVILEGES;
 EOF
-
-#Changing Directory
-#cd /var/www/wordpress
 
 #Changing in Config File
 sudo mv /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php
@@ -60,7 +58,6 @@ fct_update_salts() {
     sudo sed -i "/XXX/d" $1
     echo "SALTS REPLACED BY:"
     echo "====================="
-    cat ~/SALTS.txt
     sudo rm -rf ~/SALTS.txt
     cd $var_initial_path1
 }
@@ -75,13 +72,16 @@ sudo sed -i '17 a $CONN = mysqli_connect($DB_NAME, $DB_HOST, $DB_USER, $DB_PASSW
 sudo mv /var/www/wordpress/* /var/www/$your_domain/
 
 #remove wordpress folder
-#sudo rm -r /var/www/wordpress
+sudo rm -r /var/www/wordpress
+
+#remove the tar file
+sudo rm -r latest.tar.gz
 
 #SettingUp Permission
 sudo chown -R www-data:www-data /var/www/$your_domain/
 sudo mkdir /var/www/$your_domain/wp-content/upgrade
 sudo chmod 775 /var/www/$your_domain/wp-content/upgrade
-#sudo find /var/www/$your_domain/ -type d -exec chmod 750 {} \;
-#sudo find /var/www/$your_domain/ -type f -exec chmod 640 {} \;
+sudo find /var/www/$your_domain/ -type d -exec chmod 750 {} \;
+sudo find /var/www/$your_domain/ -type f -exec chmod 640 {} \;
 
 
