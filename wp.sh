@@ -19,7 +19,7 @@ sudo mysql -u root -p$rootpass << EOF
 Show databases; 
 CREATE DATABASE $dbname; 
 Show databases; 
-CREATE USER '$dbuser'@'localhost' IDENTIFIED WITH mysql_native_password BY '$dbpass'; 
+CREATE USER '$dbuser'@'localhost' IDENTIFIED WITH mysql_native_password BY '$rootpass'; 
 GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'localhost' WITH GRANT OPTION; 
 FLUSH PRIVILEGES;
 EOF
@@ -66,8 +66,8 @@ fct_update_salts() {
 fct_update_salts $SITE_PATH
 
 #inserting in index.php
-sudo sed -i `13 a $DB_NAME = "'$dbname'";\n $DB_HOST = "'localhost'";\n $DB_USER = "'$dbuser'";\n $DB_PASSWORD = "'$dbpass'";` /var/www/wordpress/index.php
-sudo sed -i `17 a $CONN = mysqli_connect("$DB_NAME", "$DB_HOST", "$DB_USER", "$DB_PASSWORD");` /var/www/wordpress/index.php
+sudo sed -i '13 a $DB_NAME = "'$dbname'";\n $DB_HOST = "'localhost'";\n $DB_USER = "'$dbuser'";\n $DB_PASSWORD = "'$dbpass'";' /var/www/wordpress/index.php
+sudo sed -i '17 a $CONN = mysqli_connect("$DB_NAME", "$DB_HOST", "$DB_USER", "$DB_PASSWORD");' /var/www/wordpress/index.php
 
 #moving all files from wordpress to your domain folder
 sudo mv /var/www/wordpress/* /var/www/$your_domain/
