@@ -2,7 +2,7 @@
 
 
 #Creat a directory of your domain
-sudo mkdir /var/www/$your_domain
+sudo mkdir /var/www/$your_domain/
 
 #Get owner Permission
 sudo chown -R $USER:$USER /var/www/$your_domain/
