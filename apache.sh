@@ -8,7 +8,7 @@ sudo apt-get -y update && sudo apt-get -y upgrade
 sudo apt-get -y install apache2 
 
 #Adding default server name to surpass the message
-sudo sed -i '$ a ServerName 127.0.0.1' /etc/apache2/apache2.conf
+#sudo sed -i '$ a ServerName 127.0.0.1' /etc/apache2/apache2.conf
 
 #To start, enable and check the status of Apache
 sudo systemctl start apache2
