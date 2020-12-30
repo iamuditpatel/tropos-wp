@@ -41,6 +41,12 @@ dbuser="${user}${pass}"
 #Wordpress Installation
 source ./wp.sh
 
+#Restart the Apache
+sudo systemctl restart apache2
+
+#Restart the Mysql
+sudo systemctl restart mysql
+
 echo "Your Domain is: $your_domain"
 echo "Your Mysql Password is: $rootpass"
 echo "Your Database Name is: $dbname"
