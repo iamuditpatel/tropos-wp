@@ -22,14 +22,6 @@ sudo apt-get -y upgrade
 #Apache Installation
 source ./apache.sh
 
-#Enable Firewall
-source ./firewall.sh
-
-#MYsql Password Generator
-PASSWORD=$(date +%s|sha256sum|base64|head -c 12)
-LC_ALL=C tr -dc 'A-Za-z0-9!"#$%&'\''()*+,-./:;<=>?@[\]^_`{|}~' </dev/urandom | head -c 12
-rootpass="${PASSWORD}${LC_ALL}"
-
 #Mysql Installation
 source ./mysql.sh
 
