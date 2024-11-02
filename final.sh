@@ -32,6 +32,9 @@ source ./php.sh
 sudo mkdir /var/www/$your_domain
 sudo chown -R www-data:www-data /var/www/$your_domain
 
+#Wordpress Installation
+source ./wp.sh
+
 #Virtual Host Installation
 source ./virtualhost.sh
 
@@ -42,9 +45,6 @@ dbname=`hexdump -n 8 -v -e '/1 "%02X"' /dev/urandom`
 user='user'
 pass=`hexdump -n 8 -v -e '/1 "%02X"' /dev/urandom`
 dbuser="${user}${pass}"
-
-#Wordpress Installation
-source ./wp.sh
 
 #Restart the Apache
 sudo systemctl restart apache2
