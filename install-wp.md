@@ -1,212 +1,208 @@
-# Installation of wordpress manually step by step using putty
+Certainly! Here's a step-by-step guide based on your script:
 
- - login as : root
- - Update the system
+---
 
-    ```sh
-        apt-get update
-    ```
-- Upgade the system
+# Manual WordPress Installation Guide on Ubuntu
 
-    ```sh
-        apt-get upgrade
-    ```
-    > then press y
-    
-- Apache Installation
-    
-     ```sh
-        apt-get install apache2
-    ```
-     > then press y
-     
-- Apache start and Enable
-     
-    ```sh
-        systemctl start apache2
-        systemctl enable apache2
-    ```
-- To check Apache Status
-     
-    ```sh
-        systemctl status apache2
-    ```
-##### Copy the IP and paste in Browser you will find Apache default Ubuntu Page
+This guide will walk you through manually installing WordPress, setting up a MySQL database, configuring Apache, and installing phpMyAdmin.
 
-- Installation of MySQL database server
-     
-    ```sh
-        apt-get install mysql-server
-    ```
-    
-     > then press y
-     
-- Secure installation of mysql
-     
-    ```sh
-      mysql_secure_installation
-    ```
-    
-    > then press y
-    
-- Choose the password policy: 
-- Enter 0 for Low , Enter 1 for Medium, Enter 2 for Strong
-        -you can select password according to your choice low,medium,strong.
-- select your choice Yes-y or No-n (by default you can select Yes- y 5 times) 
-        according to you provide security
+---
 
-- Start and Enable mysql
-     
-    ```sh
-       systemctl start mysql
-       systemctl enable mysql
+### Prerequisites
 
-    ```
-- find mysql file under etc folder
-     
-    ```sh
-     cd /etc
-     ls
-    ```
-- find mysql.conf.d file under mysql folder
-     
-    ```sh
-     cd mysql
-     ls
-    ```
-- Edit mysql.conf.d file
-     
-    ```sh
-     nano mysqld.cnf
-    ```
-- Add in mysqld.cnf file the default authentication plugin in mysqld section
-     
-    ```sh
-     default_authentication_plugin= mysql_native_password
-    ```
-- Exit the editor with CTRL+X ->Y->Enter
-- Back to root
-- Start and Enable mysql
-  
-    ```sh
-      systemctl start mysql
-      systemctl enable mysql
-    ```
-#### INSTALL PHP
-- Install php using following Command
-     ```sh
-     sudo apt-get install python-software-properties 
-    ```
-    ```sh
-    sudo add-apt-repository ppa:ondrej/php  
-    ```
-    ```sh
-   sudo apt-get update 
-    ```
-     ```sh
-   sudo apt-get install -y php7.0
-    ```
-     ```sh
-   sudo apt-get install php7.0-mysql php7.0-curl php7.0-json php7.0-cgi php7.0-xsl
-    ```
-     ```sh
-   apt-get install php7.0 libapache2-mod-php7.0 php7.0-mysql php7.0-curl php7.0-mbstring php7.0-gd php7.0-xml php7.0-xmlrpc php7.0-intl php7.0-soap php7.0-zip
-    ```
-    > then press y
-- Create info.php and edit it
-     ```sh
-        nano /var/www/html/info.php
-    ```
-- Copy the content
-     ```sh
-         <?php
-            phpinfo();
-        ?>
-    ```
-- restart apache
-     ```sh
-        systemctl restart apache2
+- A VPS or server running Ubuntu
+- Root or sudo access
+
+---
+
+### Step 1: Update System Packages
+
+1. Update and upgrade system packages:
+    ```bash
+    sudo apt-get update
+    sudo apt-get -y upgrade
     ```
 
-- Open the Browser copy the ip and add info.php in URL bar(like 127.90.11/info.php)
-#### Ready to Install Wordpress
-- Change the Directory 
-     ```sh
-        cd /var/www/html
-    ```
-- Download tar file of Wordpress
-     ```sh
-        wget -c http://wordpress.org/latest.tar.gz
-    ```
-- Unzip the tar file
-     ```sh
-        tar -xzvf latest.tar.gz
-    ```
-- setup permissions
-     ```sh
-        chown -R www-data:www-data /var/www/html/wordpress
-    ```
-- Log in Mysql and Create MySQL Database
-     ```sh
-        mysql –u root –p
-    ```
-- Enter the Mysql Password
-- Create Database
-     ```sh
-        CREATE DATABASE wordpress_db;
-    ```
-- Create user 
-     ```sh
-        CREATE USER 'wpuser'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-    ```
-- Grant Permission to User 
-     ```sh
-       GRANT ALL PRIVILEGES ON wordpress_db.* TO 'wpuser'@'localhost' WITH GRANT OPTION;
-    ```
-     ```sh
-       FLUSH PRIVILEGES;
-    ```
-     ```sh
-       EXIT;
-    ```
-- Change the directory to wordpress: 
-     ```sh
-       cd wordpress
-    ```
-- Check the wp-config-sample.php file in directory 
-- Rename it with following command
-     ```sh
-       mv wp-config-sample.php wp-config.php
-    ```
-- Edit the wp-config.php file using following command
-     ```sh
-       nano wp-config.php
-    ```
-- Replace the content with your database name, user name, password set according to during creation of mysql database;
-- Now edit the index.php file using nano editor
-     ```sh
-       nano index.php
-    ```
-- Add following code to it
-     ```sh
-       $DB_NAME = "wordpress_db":
-        $DB_HOST = "localhost";
-        $DB_USER = "wpuser";
-        $DB_PASSWORD = "Hackos1234@#";
+---
 
-        $conn = mysqli_connect($DB_NAME, $DB_HOST, $DB_USER, $DB_PASSWORD);
+### Step 2: Install Apache
 
-        if ($conn->connect_error)
-        {
-                die("Connection failed: " . $conn->connect_error);
-        }
-            echo "Connected successfully";
+1. Install Apache web server:
+    ```bash
+    sudo apt-get -y install apache2
+    ```
 
+---
+
+### Step 3: Install MySQL and Secure Installation
+
+1. Install MySQL server:
+    ```bash
+    sudo apt-get -y install mysql-server
     ```
-- Change the directory with cd to root
-- restart apache mysql
-      ```sh
-            systemctl restart apache2
-            systemctl restart mysql
+
+2. Run MySQL secure installation and set a root password when prompted:
+    ```bash
+    sudo mysql_secure_installation
     ```
-     
+
+   Follow the prompts to configure MySQL security options.
+
+---
+
+### Step 4: Install PHP and Required Modules
+
+1. Install PHP and necessary modules:
+    ```bash
+    sudo apt-get -y install php libapache2-mod-php php-mysql
+    ```
+
+---
+
+### Step 5: Create Directory for Domain
+
+1. **Replace `<your_domain>` with your actual domain.**
+2. Create a directory for your domain:
+    ```bash
+    sudo mkdir /var/www/<your_domain>
+    sudo chown -R www-data:www-data /var/www/<your_domain>
+    ```
+
+---
+
+### Step 6: Download and Install WordPress
+
+1. Navigate to the domain directory:
+    ```bash
+    cd /var/www/<your_domain>
+    ```
+
+2. Download the latest version of WordPress:
+    ```bash
+    sudo curl -O https://wordpress.org/latest.tar.gz
+    ```
+
+3. Extract WordPress files:
+    ```bash
+    sudo tar xzvf latest.tar.gz
+    ```
+
+4. Move the files to the domain root and remove the downloaded and extracted folders:
+    ```bash
+    sudo mv wordpress/* /var/www/<your_domain>/
+    sudo rm latest.tar.gz
+    sudo rm -r wordpress
+    ```
+
+---
+
+### Step 7: Set Up MySQL Database and User
+
+1. **Replace `<rootpass>` with your MySQL root password.**
+2. Create a database and user for WordPress:
+    ```bash
+    dbname="wordpress_$(date +%s)"
+    dbuser="wpuser_$(date +%s)"
+    ```
+
+3. Run the following MySQL commands to create a database, user, and grant privileges:
+    ```bash
+    sudo mysql -u root -p<rootpass> << EOF
+    CREATE DATABASE $dbname;
+    CREATE USER '$dbuser'@'localhost' IDENTIFIED BY '<rootpass>';
+    GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'localhost' WITH GRANT OPTION;
+    FLUSH PRIVILEGES;
+    EOF
+    ```
+
+---
+
+### Step 8: Configure WordPress
+
+1. Copy the sample WordPress config file:
+    ```bash
+    sudo mv /var/www/<your_domain>/wp-config-sample.php /var/www/<your_domain>/wp-config.php
+    ```
+
+2. Edit the configuration file with the database details:
+    ```bash
+    sudo sed -i "s/database_name_here/$dbname/g" /var/www/<your_domain>/wp-config.php
+    sudo sed -i "s/username_here/$dbuser/g" /var/www/<your_domain>/wp-config.php
+    sudo sed -i "s/password_here/<rootpass>/g" /var/www/<your_domain>/wp-config.php
+    ```
+
+---
+
+### Step 9: Set Permissions
+
+1. Set permissions for the WordPress files and directories:
+    ```bash
+    sudo find /var/www/<your_domain>/ -type d -exec chmod 755 {} \;
+    sudo find /var/www/<your_domain>/ -type f -exec chmod 644 {} \;
+    sudo chown -R www-data:www-data /var/www/<your_domain>/
+    ```
+
+---
+
+### Step 10: Configure Apache Virtual Host
+
+1. Create an Apache configuration file for your domain:
+    ```bash
+    sudo tee /etc/apache2/sites-available/<your_domain>.conf > /dev/null <<EOF
+    <VirtualHost *:80>
+        ServerAdmin webmaster@<your_domain>
+        ServerName <your_domain>
+        DocumentRoot /var/www/<your_domain>
+
+        ErrorLog ${APACHE_LOG_DIR}/<your_domain>-error.log
+        CustomLog ${APACHE_LOG_DIR}/<your_domain>-access.log combined
+
+        <Directory /var/www/<your_domain>/>
+            Options Indexes FollowSymLinks
+            AllowOverride All
+            Require all granted
+        </Directory>
+
+    </VirtualHost>
+    EOF
+    ```
+
+2. Enable the virtual host:
+    ```bash
+    sudo a2ensite <your_domain>.conf
+    ```
+
+3. Reload Apache to apply the changes:
+    ```bash
+    sudo systemctl reload apache2
+    ```
+
+---
+
+### Step 11: Install phpMyAdmin
+
+1. Install phpMyAdmin:
+    ```bash
+    sudo apt-get install -y phpmyadmin
+    ```
+
+2. Create a symbolic link for phpMyAdmin in Apache configuration:
+    ```bash
+    sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
+    ```
+
+3. Enable phpMyAdmin configuration in Apache:
+    ```bash
+    sudo a2enconf phpmyadmin.conf
+    ```
+
+4. Restart Apache to apply the changes:
+    ```bash
+    sudo systemctl restart apache2
+    ```
+
+---
+
+### Final Step: Completion Message
+
+After completing all the steps, your WordPress installation and virtual host setup should be ready!
