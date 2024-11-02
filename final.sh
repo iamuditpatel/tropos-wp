@@ -7,8 +7,17 @@ chmod u+x virtualhost.sh
 chmod u+x php.sh
 chmod u+x wp.sh
 
-echo "Enter Your Domain:"
-read your_domain
+#!/bin/bash
+
+# Prompt for domain name
+read -p "Enter Your Domain: " your_domain
+
+# Prompt for MySQL root password
+read -sp "Enter MySQL Root Password: " rootpass
+
+# Update system packages
+sudo apt-get update
+sudo apt-get -y upgrade
 
 #Apache Installation
 source ./apache.sh
