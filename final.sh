@@ -38,22 +38,27 @@ source ./wp.sh
 #Virtual Host Installation
 source ./virtualhost.sh
 
-#Database Name Generate
-dbname=`hexdump -n 8 -v -e '/1 "%02X"' /dev/urandom`
+# Enable the virtual host
+sudo a2ensite $your_domain.conf
 
-#Database User Generator
-user='user'
-pass=`hexdump -n 8 -v -e '/1 "%02X"' /dev/urandom`
-dbuser="${user}${pass}"
+# Reload Apache
+sudo systemctl reload apache2
 
-#Restart the Apache
+# Install phpMyAdmin
+sudo apt-get install -y phpmyadmin
+
+# Create symbolic link for Apache configuration
+sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
+
+# Enable phpMyAdmin configuration in Apache
+sudo a2enconf phpmyadmin.conf
+
+# Restart Apache to apply changes
 sudo systemctl restart apache2
 
-#Restart the Mysql
-sudo systemctl restart mysql
-
-echo "Your Domain is: $your_domain"
-echo "Your Mysql Password is: $rootpass"
-echo "Your Database Name is: $dbname"
-echo "Your Database User Name is: $dbuser"
-echo "Your Database Password is: $rootpass"
+echo "WordPress installation and virtual host setup completed successfully."
+echo "Your Domain: $your_domain"
+echo "MySQL Root Password: $rootpass"
+echo "Database Name: $dbname"
+echo "Database User Name: $dbuser"
+echo "Database Password: $rootpass"
