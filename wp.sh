@@ -1,87 +1,33 @@
 #!/bin/bash
 
-
-#***************WORDPRESS INSTALLATION***************
-#Change the directory
-cd /var/www/
-
-#Download the latest version of Wordpress
+# Download and extract the latest version of WordPress
+cd /var/www/$your_domain
 sudo curl -O https://wordpress.org/latest.tar.gz
-
-#Extract the downloaded file of Wordpress
 sudo tar xzvf latest.tar.gz
+sudo rm latest.tar.gz
 
-#Back to Parent Directory
-cd 
+# Move WordPress files to root directory
+sudo mv wordpress/* /var/www/$your_domain/
+sudo rm -r wordpress
 
-#SetUp the Permission
-chown -R www-data:www-data /var/www/wordpress/
-
-#Database Creation
+# Set up MySQL database and user for WordPress
+dbname="wordpress_$(date +%s)"
+dbuser="wpuser_$(date +%s)"
 sudo mysql -u root -p$rootpass << EOF
-Show databases; 
-CREATE DATABASE $dbname; 
-Show databases; 
-CREATE USER '$dbuser'@'localhost' IDENTIFIED WITH mysql_native_password BY '$rootpass'; 
-GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'localhost' WITH GRANT OPTION; 
+CREATE DATABASE $dbname;
+CREATE USER '$dbuser'@'localhost' IDENTIFIED BY '$rootpass';
+GRANT ALL PRIVILEGES ON $dbname.* TO '$dbuser'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 EOF
 
-#Changing in Config File
-sudo mv /var/www/wordpress/wp-config-sample.php /var/www/wordpress/wp-config.php
+# Configure WordPress
+sudo mv /var/www/$your_domain/wp-config-sample.php /var/www/$your_domain/wp-config.php
+sudo sed -i "s/database_name_here/$dbname/g" /var/www/$your_domain/wp-config.php
+sudo sed -i "s/username_here/$dbuser/g" /var/www/$your_domain/wp-config.php
+sudo sed -i "s/password_here/$rootpass/g" /var/www/$your_domain/wp-config.php
 
-    	sudo perl -pi -e "s/database_name_here/$dbname/g" /var/www/wordpress/wp-config.php
-	sudo perl -pi -e "s/username_here/$dbuser/g" /var/www/wordpress/wp-config.php
-	sudo perl -pi -e "s/password_here/$rootpass/g" /var/www/wordpress/wp-config.php
-	
-#Setting up Salt Keys	
-SITE_PATH="/var/www/wordpress/wp-config.php"
-	
-fct_update_salts() {
-    # Requires website name as target
-
-    curl http://api.wordpress.org/secret-key/1.1/salt/ > ~/SALTS.txt
-
-    var_initial_path1=`pwd`
-    cd ~ #going to home directory
-
-    # This scripts eliminates successively all SALT entries, replaces the last one by XXX as a marker, places SALTS.txt, below XXX and deletes XXX
-    sudo sed -i "/SECURE_AUTH_KEY/d" $1
-    sudo sed -i "/LOGGED_IN_KEY/d" $1
-    sudo sed -i "/NONCE_KEY/d" $1
-    sudo sed -i "/AUTH_SALT/d" $1
-    sudo sed -i "/SECURE_AUTH_SALT/d" $1
-    sudo sed -i "/LOGGED_IN_SALT/d" $1
-    sudo sed -i "/NONCE_SALT/d" $1
-    sudo sed -i "/AUTH_KEY/cXXX" $1
-    sudo sed -i '/XXX/r SALTS.txt' $1
-    sudo sed -i "/XXX/d" $1
-    echo "SALTS REPLACED BY:"
-    echo "====================="
-    sudo rm -rf ~/SALTS.txt
-    cd $var_initial_path1
-}
-
-fct_update_salts $SITE_PATH
-
-#inserting in index.php
-sudo sed -i '13 a $DB_NAME = "'$dbname'";\n $DB_HOST = "'localhost'";\n $DB_USER = "'$dbuser'";\n $DB_PASSWORD = "'$rootpass'";' /var/www/wordpress/index.php
-sudo sed -i '17 a $CONN = mysqli_connect($DB_NAME, $DB_HOST, $DB_USER, $DB_PASSWORD);' /var/www/wordpress/index.php
-
-#moving all files from wordpress to your domain folder
-sudo mv /var/www/wordpress/* /var/www/$your_domain/
-
-#remove wordpress folder
-sudo rm -r /var/www/wordpress
-
-#remove the tar file
-sudo rm -r latest.tar.gz
-
-#SettingUp Permission
+# Set permissions
+sudo find /var/www/$your_domain/ -type d -exec chmod 755 {} \;
+sudo find /var/www/$your_domain/ -type f -exec chmod 644 {} \;
 sudo chown -R www-data:www-data /var/www/$your_domain/
-sudo mkdir /var/www/$your_domain/wp-content/upgrade
-sudo chmod 775 /var/www/$your_domain/wp-content/upgrade
-sudo find /var/www/$your_domain/ -type d -exec chmod 750 {} \;
-sudo find /var/www/$your_domain/ -type f -exec chmod 640 {} \;
-
 
