@@ -1,8 +1,5 @@
 #!/bin/bash
 
-
-
-#***************MYSQL INSTALLATION***************
 # Install MySQL and secure installation
 sudo apt-get -y install mysql-server
 sudo mysql_secure_installation << EOF
