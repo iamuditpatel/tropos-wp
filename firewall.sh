@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#***************FIREWALL ENABLE***************
 #To check list of ufw(firewall)
 sudo ufw app list
 
