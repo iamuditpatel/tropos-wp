@@ -28,6 +28,10 @@ source ./mysql.sh
 #PHP Installation
 source ./php.sh
 
+# Create a directory for the domain
+sudo mkdir /var/www/$your_domain
+sudo chown -R www-data:www-data /var/www/$your_domain
+
 #Virtual Host Installation
 source ./virtualhost.sh
 
