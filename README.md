@@ -25,7 +25,6 @@ This Bash script automates the setup of a WordPress site on an Ubuntu server. It
 
     ```bash
     git clone https://github.com/iamuditpatel/tropos-wp.git
-    cd wordpress-setup-script
     ```
 
 2. Make the script executable:
